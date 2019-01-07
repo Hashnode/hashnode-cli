@@ -2,41 +2,6 @@
 
 
 [[projects]]
-  digest = "1:666e546c77c8a4eb7a77fcbd5c9bc4a367e8ec2e4fb74dcd74d2e218751567ad"
-  name = "github.com/alecthomas/gometalinter"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "102ac984005d45456a7e3ae6dc94ebcd95c2bb19"
-  version = "v2.0.12"
-
-[[projects]]
-  branch = "master"
-  digest = "1:c198fdc381e898e8fb62b8eb62758195091c313ad18e52a3067366e1dda2fb3c"
-  name = "github.com/alecthomas/units"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "2efee857e7cfd4f3d0138cc3cbb1b4966962b93a"
-
-[[projects]]
-  branch = "master"
-  digest = "1:454adc7f974228ff789428b6dc098638c57a64aa0718f0bd61e53d3cd39d7a75"
-  name = "github.com/chzyer/readline"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "2972be24d48e78746da79ba8e24e8b488c9880de"
-
-[[projects]]
-  digest = "1:848ef40f818e59905140552cc49ff3dc1a15f955e4b56d1c5c2cc4b54dbadf0c"
-  name = "github.com/client9/misspell"
-  packages = [
-    ".",
-    "cmd/misspell",
-  ]
-  pruneopts = "UT"
-  revision = "b90dc15cfd220ecf8bbc9043ecb928cef381f011"
-  version = "v0.3.4"
-
-[[projects]]
   digest = "1:abeb38ade3f32a92943e5be54f55ed6d6e3b6602761d74b4aab4c9dd45c18abd"
   name = "github.com/fsnotify/fsnotify"
   packages = ["."]
@@ -62,32 +27,6 @@
   pruneopts = "UT"
   revision = "aaadc574a6ed8dc3abe56036ca130dcee1ee6b6e"
   version = "v1.1.1"
-
-[[projects]]
-  branch = "travis-1.9"
-  digest = "1:e8f5d9c09a7209c740e769713376abda388c41b777ba8e9ed52767e21acf379f"
-  name = "github.com/golang/lint"
-  packages = [
-    ".",
-    "golint",
-  ]
-  pruneopts = "UT"
-  revision = "883fe33ffc4344bad1ecd881f61afd5ec5d80e0a"
-
-[[projects]]
-  digest = "1:750e747d0aad97b79f4a4e00034bae415c2ea793fd9e61438d966ee9c79579bf"
-  name = "github.com/google/shlex"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "6f45313302b9c56850fc17f99e40caebce98c716"
-
-[[projects]]
-  branch = "master"
-  digest = "1:824d147914b40e56e9e1eebd602bc6bb9761989d52fd8e4a498428467980eb17"
-  name = "github.com/gordonklaus/ineffassign"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "1003c8bd00dc2869cb5ca5282e6ce33834fed514"
 
 [[projects]]
   digest = "1:c0d19ab64b32ce9fe5cf4ddceba78d5bc9807f0016db6b1183599da3dcc24d10"
@@ -117,17 +56,6 @@
   version = "v1.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:e51f40f0c19b39c1825eadd07d5c0a98a2ad5942b166d9fc4f54750ce9a04810"
-  name = "github.com/juju/ansiterm"
-  packages = [
-    ".",
-    "tabwriter",
-  ]
-  pruneopts = "UT"
-  revision = "720a0952cc2ac777afc295d9861263e2a4cf96a1"
-
-[[projects]]
   digest = "1:c65a16ac77d0b1aefc7009cabb6ac5ad05def02025f5be85f450c03f52cc6f86"
   name = "github.com/lucasb-eyer/go-colorful"
   packages = ["."]
@@ -136,48 +64,12 @@
   version = "v1.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:bb08c7bb1c7224636b1a00639f079ed4391eb822945f26db74b8d8ee3f14d991"
-  name = "github.com/lunixbochs/vtclean"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "2d01aacdc34a083dca635ba869909f5fc0cd4f41"
-
-[[projects]]
   digest = "1:c568d7727aa262c32bdf8a3f7db83614f7af0ed661474b24588de635c20024c7"
   name = "github.com/magiconair/properties"
   packages = ["."]
   pruneopts = "UT"
   revision = "c2353362d570a7bfa228149c62842019201cfb71"
   version = "v1.8.0"
-
-[[projects]]
-  digest = "1:2a2a76072bd413b3484a0b5bb2fbb078b0b7dd8950e9276c900e14dce2354679"
-  name = "github.com/manifoldco/promptui"
-  packages = [
-    ".",
-    "list",
-    "screenbuf",
-  ]
-  pruneopts = "UT"
-  revision = "20f2a94120aa14a334121a6de66616a7fa89a5cd"
-  version = "v0.3.2"
-
-[[projects]]
-  digest = "1:c658e84ad3916da105a761660dcaeb01e63416c8ec7bc62256a9b411a05fcd67"
-  name = "github.com/mattn/go-colorable"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
-  version = "v0.0.9"
-
-[[projects]]
-  digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
-  name = "github.com/mattn/go-isatty"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
-  version = "v0.0.4"
 
 [[projects]]
   digest = "1:0356f3312c9bd1cbeda81505b7fd437501d8e778ab66998ef69f00d7f9b3a0d7"
@@ -204,19 +96,6 @@
   version = "v1.1.2"
 
 [[projects]]
-  digest = "1:07140002dbf37da92090f731b46fa47be4820b82fe5c14a035203b0e813d0ec2"
-  name = "github.com/nicksnyder/go-i18n"
-  packages = [
-    "i18n",
-    "i18n/bundle",
-    "i18n/language",
-    "i18n/translation",
-  ]
-  pruneopts = "UT"
-  revision = "0dc1626d56435e9d605a29875701721c54bc9bbd"
-  version = "v1.10.0"
-
-[[projects]]
   digest = "1:95741de3af260a92cc5c7f3f3061e85273f5a81b5db20d4bd68da74bd521675e"
   name = "github.com/pelletier/go-toml"
   packages = ["."]
@@ -231,6 +110,14 @@
   packages = ["."]
   pruneopts = "UT"
   revision = "36893a66979260e9758701ae306ec0d69c0f53c8"
+
+[[projects]]
+  digest = "1:9421f6e9e28ef86933e824b5caff441366f2b69bb281085b9dca40e1f27a1602"
+  name = "github.com/shurcooL/sanitized_anchor_name"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "7bfe4c7ecddb3666a94b053b422cdd8f5aaa3615"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:d707dbc1330c0ed177d4642d6ae102d5e2c847ebd0eb84562d0dc4f024531cfc"
@@ -285,11 +172,43 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ba52e5a5fb800ce55108b7a5f181bb809aab71c16736051312b0aa969f82ad39"
-  name = "github.com/tsenart/deadcode"
+  digest = "1:5d2cbd796d9f18072447474c777143b0507927b7bb986512fc4e367c4cf72873"
+  name = "gitlab.com/golang-commonmark/html"
   packages = ["."]
   pruneopts = "UT"
-  revision = "210d2dc333e90c7e3eedf4f2242507a8e83ed4ab"
+  revision = "cfaf75183c4a5f0e44e3d51ece1065accafdd2b3"
+
+[[projects]]
+  branch = "master"
+  digest = "1:b2df46c18988f929c3e409a31bbb9c71b0478abcc4cffe9c7a3bf337cd69fce0"
+  name = "gitlab.com/golang-commonmark/linkify"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c22b7bdb117955ff2cc0e3724083d35e3419d71e"
+
+[[projects]]
+  branch = "master"
+  digest = "1:4a82d7e805a3376def8c3bca81b6086825cf7f77b9ec995109b2054dbe125c3e"
+  name = "gitlab.com/golang-commonmark/markdown"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "772775880e1fbf39a7804149ed11c0f714ec89fe"
+
+[[projects]]
+  branch = "master"
+  digest = "1:0f5444377e1a705077df602f28b8571a85753883ddcd6580f28cc285835e4e51"
+  name = "gitlab.com/golang-commonmark/mdurl"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e5bce34c34f29ecf232fec34f3982e55533ec14e"
+
+[[projects]]
+  branch = "master"
+  digest = "1:6b1431a6153c85e1e646b89af7c3a729b44c2572f78ea157c3b7d7a7adc31835"
+  name = "gitlab.com/golang-commonmark/puny"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2cd490539afe7c6fc0eda6c59ef88fa93a00ea0d"
 
 [[projects]]
   branch = "master"
@@ -300,42 +219,35 @@
   revision = "cb59ee3660675d463e86971646692ea3e470021c"
 
 [[projects]]
-  digest = "1:69c6af69fd1551d253ed0520e4c9f312908b348a79a95ad5ae39883898f628b1"
+  digest = "1:3dbccc894352c3a1a943e8906bd354ee4f020e64d7ba8bdc66ab248709a7f226"
   name = "golang.org/x/text"
   packages = [
+    "collate",
+    "collate/build",
     "encoding",
     "encoding/internal/identifier",
+    "internal/colltab",
     "internal/gen",
+    "internal/tag",
     "internal/triegen",
     "internal/ucd",
+    "language",
     "transform",
     "unicode/cldr",
     "unicode/norm",
+    "unicode/rangetable",
   ]
   pruneopts = "UT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:da76817708f332e4a6a161581de588bbd420d020e976759408b3321f39f1a48d"
-  name = "golang.org/x/tools"
-  packages = [
-    "go/ast/astutil",
-    "go/gcexportdata",
-    "go/internal/gcimporter",
-    "go/types/typeutil",
-  ]
-  pruneopts = "UT"
-  revision = "d345f29b0d7b54f2b7ec62b5363832790be35e40"
-
-[[projects]]
-  branch = "v3-unstable"
-  digest = "1:39efb07a0d773dc09785b237ada4e10b5f28646eb6505d97bc18f8d2ff439362"
-  name = "gopkg.in/alecthomas/kingpin.v3-unstable"
+  digest = "1:2ee0f15eb0fb04f918db7c2dcf39745f40d69f798ef171610a730e8a56aaa4fd"
+  name = "gopkg.in/russross/blackfriday.v2"
   packages = ["."]
   pruneopts = "UT"
-  revision = "63abe20a23e29e80bbef8089bd3dee3ac25e5306"
+  revision = "d3b5b032dc8e8927d31a5071b56e14c89f045135"
+  version = "v2.0.1"
 
 [[projects]]
   digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
@@ -349,11 +261,13 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/manifoldco/promptui",
+    "github.com/gdamore/tcell",
     "github.com/mitchellh/go-homedir",
     "github.com/rivo/tview",
     "github.com/spf13/cobra",
     "github.com/spf13/viper",
+    "gitlab.com/golang-commonmark/markdown",
+    "gopkg.in/russross/blackfriday.v2",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

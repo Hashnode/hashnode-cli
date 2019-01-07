@@ -6,21 +6,23 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
-	"github.com/manifoldco/promptui"
+	"github.com/gdamore/tcell"
 	"github.com/rivo/tview"
 	"github.com/spf13/cobra"
 )
 
 const (
-	rootAPIURL = "https://hashnode.com/ajax/posts"
+	rootAPIURL = "https://hashnode.com/ajax"
 )
 
 // API URL's
 var (
-	hotPostsAPI = fmt.Sprintf("%s/%s", rootAPIURL, "hot")
-	newsAPI     = fmt.Sprintf("%s/%s", rootAPIURL, "news")
+	hotPostsAPI = fmt.Sprintf("%s/posts/%s", rootAPIURL, "hot")
+	newsAPI     = fmt.Sprintf("%s/posts/%s", rootAPIURL, "news")
+	postAPI     = fmt.Sprintf("%s/post", rootAPIURL)
 )
 
 // flags
@@ -62,25 +64,60 @@ func getHotPosts() {
 	if err != nil {
 		log.Println(err)
 	}
-	var posttitles []string
-	for _, post := range hotposts.Posts {
-		posttitles = append(posttitles, post.Title)
-	}
-	prompt := promptui.Select{
-		Label: "Hot Posts",
-		Items: posttitles,
-	}
-	_, result, err := prompt.Run()
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		return
+
+	list := tview.NewList()
+	app := tview.NewApplication()
+
+	for ind, post := range hotposts.Posts {
+		openPost := func() {
+			var singlePost Post
+			b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, post.Cuid))
+			if err != nil {
+				app.Stop()
+				log.Fatal(err)
+			}
+
+			err = json.Unmarshal(b, &singlePost)
+			if err != nil {
+				app.Stop()
+				log.Fatal(err)
+			}
+
+			writePost := func(screen tcell.Screen, x, y, width, height int) (int, int, int, int) {
+				// md := markdown.New(markdown.XHTMLOutput(true))
+
+				// outputmd := md.RenderToString([]byte(singlePost.Post.ContentMarkdown))
+
+				for ind, line := range tview.WordWrap(singlePost.Post.ContentMarkdown, width) {
+					tview.PrintSimple(screen, line, x+3, y+ind+1)
+				}
+
+				// for ind, line := range tview.WordWrap(string(outputmd), width) {
+				// 	tview.PrintSimple(screen, line, x+3, y+ind+1)
+				// }
+				return x, y, width, height
+			}
+
+			box := tview.NewBox().
+				SetBorder(true).
+				SetTitle(post.Title).SetDrawFunc(writePost)
+			app.SetRoot(box, true).Run()
+		}
+
+		list = list.AddItem(post.Title, post.Brief, rune(strconv.Itoa(ind)[0]), openPost)
 	}
 
-	fmt.Printf("You choose %q\n", result)
-	box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
-	if err := tview.NewApplication().SetRoot(box, true).Run(); err != nil {
+	list.AddItem("Quit", "Press to exit", 'q', func() {
+		app.Stop()
+	})
+
+	if err := app.SetRoot(list, true).SetFocus(list).Run(); err != nil {
 		panic(err)
 	}
+	// box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
+	// if err := tview.NewApplication().SetRoot(box, true).Run(); err != nil {
+	// 	panic(err)
+	// }
 
 }
 
@@ -119,18 +156,64 @@ func makeRequest(url string) ([]byte, error) {
 }
 
 type HotPosts struct {
-	Posts []struct {
-		ID             string `json:"_id"`
-		FollowersCount int    `json:"followersCount"`
-		Author         struct {
-			ID            string      `json:"_id"`
-			Role          interface{} `json:"role"`
-			NumFollowing  int         `json:"numFollowing"`
-			NumFollowers  int         `json:"numFollowers"`
-			Name          string      `json:"name"`
-			Tagline       string      `json:"tagline"`
-			Photo         string      `json:"photo"`
-			Username      string      `json:"username"`
+	Posts []PostDetails `json:"posts,omitempty"`
+}
+
+type PostDetails struct {
+	ID             string `json:"_id"`
+	FollowersCount int    `json:"followersCount"`
+	Author         struct {
+		ID            string      `json:"_id"`
+		Role          interface{} `json:"role"`
+		NumFollowing  int         `json:"numFollowing"`
+		NumFollowers  int         `json:"numFollowers"`
+		Name          string      `json:"name"`
+		Tagline       string      `json:"tagline"`
+		Photo         string      `json:"photo"`
+		Username      string      `json:"username"`
+		Appreciations []struct {
+			Badge string `json:"badge"`
+			ID    string `json:"_id"`
+			Count int    `json:"count"`
+		} `json:"appreciations"`
+		DateJoined  time.Time `json:"dateJoined"`
+		SocialMedia struct {
+			Website  string `json:"website"`
+			Twitter  string `json:"twitter"`
+			Github   string `json:"github"`
+			Linkedin string `json:"linkedin"`
+			Google   string `json:"google"`
+			Facebook string `json:"facebook"`
+		} `json:"socialMedia"`
+		StoriesCreated       []string      `json:"storiesCreated"`
+		Location             string        `json:"location"`
+		CoverImage           string        `json:"coverImage"`
+		BadgesAwarded        []interface{} `json:"badgesAwarded"`
+		TotalUpvotesReceived int           `json:"totalUpvotesReceived"`
+		IsEvangelist         bool          `json:"isEvangelist"`
+		NumReactions         int           `json:"numReactions"`
+	} `json:"author"`
+	Cuid                   string        `json:"cuid"`
+	Slug                   string        `json:"slug"`
+	Title                  string        `json:"title"`
+	Type                   string        `json:"type"`
+	ReactionsByCurrentUser []interface{} `json:"reactionsByCurrentUser"`
+	TotalReactions         int           `json:"totalReactions"`
+	Reactions              []struct {
+		ID    string `json:"_id"`
+		Image string `json:"image"`
+		Name  string `json:"name"`
+	} `json:"reactions"`
+	BookmarkedIn []interface{} `json:"bookmarkedIn"`
+	HasReward    bool          `json:"hasReward"`
+	Contributors []struct {
+		User struct {
+			ID            string        `json:"_id"`
+			Username      string        `json:"username"`
+			Name          string        `json:"name"`
+			Photo         string        `json:"photo"`
+			Tagline       string        `json:"tagline"`
+			BadgesAwarded []interface{} `json:"badgesAwarded"`
 			Appreciations []struct {
 				Badge string `json:"badge"`
 				ID    string `json:"_id"`
@@ -138,92 +221,249 @@ type HotPosts struct {
 			} `json:"appreciations"`
 			DateJoined  time.Time `json:"dateJoined"`
 			SocialMedia struct {
-				Website  string `json:"website"`
-				Twitter  string `json:"twitter"`
-				Github   string `json:"github"`
-				Linkedin string `json:"linkedin"`
-				Google   string `json:"google"`
-				Facebook string `json:"facebook"`
+				Twitter       string `json:"twitter"`
+				Github        string `json:"github"`
+				Stackoverflow string `json:"stackoverflow"`
+				Linkedin      string `json:"linkedin"`
+				Google        string `json:"google"`
+				Website       string `json:"website"`
 			} `json:"socialMedia"`
-			StoriesCreated       []string      `json:"storiesCreated"`
-			Location             string        `json:"location"`
-			CoverImage           string        `json:"coverImage"`
-			BadgesAwarded        []interface{} `json:"badgesAwarded"`
-			TotalUpvotesReceived int           `json:"totalUpvotesReceived"`
-			IsEvangelist         bool          `json:"isEvangelist"`
-			NumReactions         int           `json:"numReactions"`
-		} `json:"author"`
-		Cuid                   string        `json:"cuid"`
-		Slug                   string        `json:"slug"`
-		Title                  string        `json:"title"`
-		Type                   string        `json:"type"`
-		ReactionsByCurrentUser []interface{} `json:"reactionsByCurrentUser"`
-		TotalReactions         int           `json:"totalReactions"`
-		Reactions              []struct {
-			ID    string `json:"_id"`
-			Image string `json:"image"`
-			Name  string `json:"name"`
-		} `json:"reactions"`
-		BookmarkedIn []interface{} `json:"bookmarkedIn"`
-		HasReward    bool          `json:"hasReward"`
-		Contributors []struct {
-			User struct {
-				ID            string        `json:"_id"`
-				Username      string        `json:"username"`
-				Name          string        `json:"name"`
-				Photo         string        `json:"photo"`
-				Tagline       string        `json:"tagline"`
-				BadgesAwarded []interface{} `json:"badgesAwarded"`
-				Appreciations []struct {
+			StoriesCreated       []string    `json:"storiesCreated"`
+			NumFollowing         int         `json:"numFollowing"`
+			NumFollowers         int         `json:"numFollowers"`
+			Location             string      `json:"location"`
+			Role                 interface{} `json:"role"`
+			CoverImage           string      `json:"coverImage"`
+			TotalUpvotesReceived int         `json:"totalUpvotesReceived"`
+			IsEvangelist         bool        `json:"isEvangelist"`
+			NumReactions         int         `json:"numReactions"`
+		} `json:"user"`
+		Stamp string `json:"stamp"`
+		ID    string `json:"_id"`
+	} `json:"contributors"`
+	IsActive      bool      `json:"isActive"`
+	ResponseCount int       `json:"responseCount"`
+	DateAdded     time.Time `json:"dateAdded"`
+	Tags          []struct {
+		ID         string      `json:"_id"`
+		Name       string      `json:"name"`
+		Slug       string      `json:"slug"`
+		MergedWith interface{} `json:"mergedWith,omitempty"`
+		IsApproved bool        `json:"isApproved"`
+		IsActive   bool        `json:"isActive"`
+	} `json:"tags"`
+	Downvotes               int           `json:"downvotes"`
+	Upvotes                 int           `json:"upvotes"`
+	TotalPollVotes          int           `json:"totalPollVotes"`
+	PollOptions             []interface{} `json:"pollOptions"`
+	HasPolls                bool          `json:"hasPolls"`
+	Brief                   string        `json:"brief"`
+	CoverImage              string        `json:"coverImage"`
+	Views                   int           `json:"views"`
+	IsAnonymous             bool          `json:"isAnonymous"`
+	DateUpdated             time.Time     `json:"dateUpdated"`
+	IndexVotedByCurrentUser int           `json:"indexVotedByCurrentUser"`
+	IsFollowing             bool          `json:"isFollowing"`
+	DateFeatured            time.Time     `json:"dateFeatured,omitempty"`
+}
+
+type Post struct {
+	Post struct {
+		IndexVotedByCurrentUser int  `json:"indexVotedByCurrentUser"`
+		IsFollowing             bool `json:"isFollowing"`
+		Responses               []struct {
+			ID              string `json:"_id"`
+			Content         string `json:"content"`
+			ContentMarkdown string `json:"contentMarkdown"`
+			Author          struct {
+				ID                   string        `json:"_id"`
+				Username             string        `json:"username"`
+				Name                 string        `json:"name"`
+				Photo                string        `json:"photo"`
+				Tagline              string        `json:"tagline"`
+				Role                 interface{}   `json:"role"`
+				CoverImage           string        `json:"coverImage"`
+				NumReactions         int           `json:"numReactions"`
+				IsEvangelist         bool          `json:"isEvangelist"`
+				BadgesAwarded        []interface{} `json:"badgesAwarded"`
+				TotalUpvotesReceived int           `json:"totalUpvotesReceived"`
+				Appreciations        []struct {
 					Badge string `json:"badge"`
 					ID    string `json:"_id"`
 					Count int    `json:"count"`
 				} `json:"appreciations"`
 				DateJoined  time.Time `json:"dateJoined"`
 				SocialMedia struct {
+					Linkedin      string `json:"linkedin"`
+					Stackoverflow string `json:"stackoverflow"`
+					Google        string `json:"google"`
+					Facebook      string `json:"facebook"`
 					Twitter       string `json:"twitter"`
 					Github        string `json:"github"`
-					Stackoverflow string `json:"stackoverflow"`
-					Linkedin      string `json:"linkedin"`
-					Google        string `json:"google"`
 					Website       string `json:"website"`
 				} `json:"socialMedia"`
-				StoriesCreated       []string    `json:"storiesCreated"`
-				NumFollowing         int         `json:"numFollowing"`
-				NumFollowers         int         `json:"numFollowers"`
-				Location             string      `json:"location"`
-				Role                 interface{} `json:"role"`
-				CoverImage           string      `json:"coverImage"`
-				TotalUpvotesReceived int         `json:"totalUpvotesReceived"`
-				IsEvangelist         bool        `json:"isEvangelist"`
-				NumReactions         int         `json:"numReactions"`
+				StoriesCreated          []string `json:"storiesCreated"`
+				NumFollowing            int      `json:"numFollowing"`
+				NumFollowers            int      `json:"numFollowers"`
+				IsDeactivated           bool     `json:"isDeactivated"`
+				Location                string   `json:"location"`
+				TotalAppreciationBadges int      `json:"totalAppreciationBadges"`
+			} `json:"author"`
+			Stamp              string `json:"stamp"`
+			Post               string `json:"post"`
+			V                  int    `json:"__v"`
+			ReactionToCountMap struct {
+				Reaction567453D0B73D6A82Ac8C5Abd int `json:"reaction_567453d0b73d6a82ac8c5abd"`
+				Reaction5C090D96C2A9C2A674D35487 int `json:"reaction_5c090d96c2a9c2a674d35487"`
+				Reaction5C090D96C2A9C2A674D35486 int `json:"reaction_5c090d96c2a9c2a674d35486"`
+			} `json:"reactionToCountMap"`
+			ReactionsByCurrentUser []interface{} `json:"reactionsByCurrentUser"`
+			TotalReactions         int           `json:"totalReactions"`
+			Reactions              []string      `json:"reactions"`
+			Score                  int           `json:"score"`
+			BookmarkedIn           []interface{} `json:"bookmarkedIn"`
+			IsRewardWinner         bool          `json:"isRewardWinner"`
+			TotalBadgesAwarded     int           `json:"totalBadgesAwarded"`
+			BadgesAwarded          []interface{} `json:"badgesAwarded"`
+			IsCollapsed            bool          `json:"isCollapsed"`
+			Downvotes              int           `json:"downvotes"`
+			Upvotes                int           `json:"upvotes"`
+			DownvotedBy            []interface{} `json:"downvotedBy"`
+			UpvotedBy              []interface{} `json:"upvotedBy"`
+			IsActive               bool          `json:"isActive"`
+			DateAdded              time.Time     `json:"dateAdded"`
+			Popularity             float64       `json:"popularity"`
+			Replies                []interface{} `json:"replies"`
+		} `json:"responses"`
+		ID             string `json:"_id"`
+		IsRepublished  bool   `json:"isRepublished"`
+		FollowersCount int    `json:"followersCount"`
+		Author         struct {
+			BeingFollowed        bool          `json:"beingFollowed"`
+			ID                   string        `json:"_id"`
+			Role                 interface{}   `json:"role"`
+			Name                 string        `json:"name"`
+			Tagline              string        `json:"tagline"`
+			Photo                string        `json:"photo"`
+			Username             string        `json:"username"`
+			CoverImage           string        `json:"coverImage"`
+			NumReactions         int           `json:"numReactions"`
+			IsEvangelist         bool          `json:"isEvangelist"`
+			BadgesAwarded        []interface{} `json:"badgesAwarded"`
+			TotalUpvotesReceived int           `json:"totalUpvotesReceived"`
+			Appreciations        []struct {
+				Badge string `json:"badge"`
+				ID    string `json:"_id"`
+				Count int    `json:"count"`
+			} `json:"appreciations"`
+			DateJoined  time.Time `json:"dateJoined"`
+			SocialMedia struct {
+				Linkedin      string `json:"linkedin"`
+				Stackoverflow string `json:"stackoverflow"`
+				Google        string `json:"google"`
+				Facebook      string `json:"facebook"`
+				Twitter       string `json:"twitter"`
+				Github        string `json:"github"`
+				Website       string `json:"website"`
+			} `json:"socialMedia"`
+			StoriesCreated          []string `json:"storiesCreated"`
+			NumFollowing            int      `json:"numFollowing"`
+			NumFollowers            int      `json:"numFollowers"`
+			IsDeactivated           bool     `json:"isDeactivated"`
+			Location                string   `json:"location"`
+			TotalAppreciationBadges int      `json:"totalAppreciationBadges"`
+		} `json:"author"`
+		Cuid               string    `json:"cuid"`
+		Slug               string    `json:"slug"`
+		Title              string    `json:"title"`
+		Type               string    `json:"type"`
+		V                  int       `json:"__v"`
+		DateUpdated        time.Time `json:"dateUpdated"`
+		ReactionToCountMap struct {
+			Reaction5C090D96C2A9C2A674D35486 int `json:"reaction_5c090d96c2a9c2a674d35486"`
+			Reaction5C090D96C2A9C2A674D35485 int `json:"reaction_5c090d96c2a9c2a674d35485"`
+			Reaction5C090D96C2A9C2A674D35484 int `json:"reaction_5c090d96c2a9c2a674d35484"`
+		} `json:"reactionToCountMap"`
+		OgImage                string        `json:"ogImage"`
+		ReactionsByCurrentUser []interface{} `json:"reactionsByCurrentUser"`
+		TotalReactions         int           `json:"totalReactions"`
+		Reactions              []string      `json:"reactions"`
+		BookmarkedIn           []interface{} `json:"bookmarkedIn"`
+		HasReward              bool          `json:"hasReward"`
+		IsPublication          bool          `json:"isPublication"`
+		NumCollapsed           int           `json:"numCollapsed"`
+		DuplicatePosts         []interface{} `json:"duplicatePosts"`
+		IsDelisted             bool          `json:"isDelisted"`
+		AnsweredByTarget       bool          `json:"answeredByTarget"`
+		Contributors           []struct {
+			User struct {
+				ID                   string        `json:"_id"`
+				Username             string        `json:"username"`
+				Name                 string        `json:"name"`
+				Photo                string        `json:"photo"`
+				Tagline              string        `json:"tagline"`
+				Role                 interface{}   `json:"role"`
+				CoverImage           string        `json:"coverImage"`
+				NumReactions         int           `json:"numReactions"`
+				IsEvangelist         bool          `json:"isEvangelist"`
+				BadgesAwarded        []interface{} `json:"badgesAwarded"`
+				TotalUpvotesReceived int           `json:"totalUpvotesReceived"`
+				Appreciations        []struct {
+					Badge string `json:"badge"`
+					ID    string `json:"_id"`
+					Count int    `json:"count"`
+				} `json:"appreciations"`
+				DateJoined  time.Time `json:"dateJoined"`
+				SocialMedia struct {
+					Linkedin      string `json:"linkedin"`
+					Stackoverflow string `json:"stackoverflow"`
+					Google        string `json:"google"`
+					Facebook      string `json:"facebook"`
+					Twitter       string `json:"twitter"`
+					Github        string `json:"github"`
+					Website       string `json:"website"`
+				} `json:"socialMedia"`
+				StoriesCreated          []string `json:"storiesCreated"`
+				NumFollowing            int      `json:"numFollowing"`
+				NumFollowers            int      `json:"numFollowers"`
+				IsDeactivated           bool     `json:"isDeactivated"`
+				Location                string   `json:"location"`
+				TotalAppreciationBadges int      `json:"totalAppreciationBadges"`
 			} `json:"user"`
 			Stamp string `json:"stamp"`
 			ID    string `json:"_id"`
 		} `json:"contributors"`
-		IsActive      bool      `json:"isActive"`
-		ResponseCount int       `json:"responseCount"`
-		DateAdded     time.Time `json:"dateAdded"`
-		Tags          []struct {
+		IsEngaging      bool          `json:"isEngaging"`
+		IsFeatured      bool          `json:"isFeatured"`
+		IsActive        bool          `json:"isActive"`
+		Followers       []interface{} `json:"followers"`
+		ResponseCount   int           `json:"responseCount"`
+		QuestionReplies []interface{} `json:"questionReplies"`
+		DateAdded       time.Time     `json:"dateAdded"`
+		UntaggedFrom    []interface{} `json:"untaggedFrom"`
+		Tags            []struct {
 			ID         string      `json:"_id"`
 			Name       string      `json:"name"`
 			Slug       string      `json:"slug"`
-			MergedWith interface{} `json:"mergedWith,omitempty"`
 			IsApproved bool        `json:"isApproved"`
 			IsActive   bool        `json:"isActive"`
+			NumPosts   int         `json:"numPosts"`
+			MergedWith interface{} `json:"mergedWith"`
+			Logo       string      `json:"logo,omitempty"`
 		} `json:"tags"`
-		Downvotes               int           `json:"downvotes"`
-		Upvotes                 int           `json:"upvotes"`
-		TotalPollVotes          int           `json:"totalPollVotes"`
-		PollOptions             []interface{} `json:"pollOptions"`
-		HasPolls                bool          `json:"hasPolls"`
-		Brief                   string        `json:"brief"`
-		CoverImage              string        `json:"coverImage"`
-		Views                   int           `json:"views"`
-		IsAnonymous             bool          `json:"isAnonymous"`
-		DateUpdated             time.Time     `json:"dateUpdated"`
-		IndexVotedByCurrentUser int           `json:"indexVotedByCurrentUser"`
-		IsFollowing             bool          `json:"isFollowing"`
-		DateFeatured            time.Time     `json:"dateFeatured,omitempty"`
-	} `json:"posts"`
+		Downvotes      int `json:"downvotes"`
+		Upvotes        int `json:"upvotes"`
+		TotalPollVotes int `json:"totalPollVotes"`
+		Reward         struct {
+			Type string `json:"type"`
+		} `json:"reward"`
+		PollOptions     []interface{} `json:"pollOptions"`
+		HasPolls        bool          `json:"hasPolls"`
+		ContentMarkdown string        `json:"contentMarkdown"`
+		Content         string        `json:"content"`
+		Brief           string        `json:"brief"`
+		CoverImage      string        `json:"coverImage"`
+		Views           int           `json:"views"`
+		IsAnonymous     bool          `json:"isAnonymous"`
+	} `json:"post"`
 }
