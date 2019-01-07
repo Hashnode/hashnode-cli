@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -69,49 +70,29 @@ func getHotPosts() {
 	app := tview.NewApplication()
 
 	for ind, post := range hotposts.Posts {
-		openPost := func() {
-			var singlePost Post
-			b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, post.Cuid))
-			if err != nil {
-				app.Stop()
-				log.Fatal(err)
-			}
 
-			err = json.Unmarshal(b, &singlePost)
-			if err != nil {
-				app.Stop()
-				log.Fatal(err)
-			}
-
-			writePost := func(screen tcell.Screen, x, y, width, height int) (int, int, int, int) {
-				// md := markdown.New(markdown.XHTMLOutput(true))
-
-				// outputmd := md.RenderToString([]byte(singlePost.Post.ContentMarkdown))
-
-				for ind, line := range tview.WordWrap(singlePost.Post.ContentMarkdown, width) {
-					tview.PrintSimple(screen, line, x+3, y+ind+1)
-				}
-
-				// for ind, line := range tview.WordWrap(string(outputmd), width) {
-				// 	tview.PrintSimple(screen, line, x+3, y+ind+1)
-				// }
-				return x, y, width, height
-			}
-
-			box := tview.NewBox().
-				SetBorder(true).
-				SetTitle(post.Title).SetDrawFunc(writePost)
-			app.SetRoot(box, true).Run()
-		}
-
-		list = list.AddItem(post.Title, post.Brief, rune(strconv.Itoa(ind)[0]), openPost)
+		list = list.AddItem(post.Title, post.Brief, rune(strconv.Itoa(ind)[0]), nil)
 	}
 
 	list.AddItem("Quit", "Press to exit", 'q', func() {
 		app.Stop()
+		os.Exit(0)
 	})
 
+	list.SetSelectedFunc(func(runeindex int, title string, desc string, r rune) {
+		if r != 'q' {
+			n, err := strconv.Atoi(string(r))
+			if err != nil {
+				app.Stop()
+				panic(err)
+			}
+
+			openPost(app, hotposts.Posts[n].Cuid, list)
+
+		}
+	})
 	if err := app.SetRoot(list, true).SetFocus(list).Run(); err != nil {
+		app.Stop()
 		panic(err)
 	}
 	// box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
@@ -119,6 +100,43 @@ func getHotPosts() {
 	// 	panic(err)
 	// }
 
+}
+
+func openPost(app *tview.Application, postcuid string, list *tview.List) {
+	var singlePost Post
+	b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, postcuid))
+	if err != nil {
+		app.Stop()
+		log.Fatal(err)
+	}
+
+	err = json.Unmarshal(b, &singlePost)
+	if err != nil {
+		app.Stop()
+		log.Fatal(err)
+	}
+
+	textView := tview.NewTextView().
+		SetDynamicColors(true).
+		SetRegions(true).
+		SetChangedFunc(func() {
+			app.Draw()
+		})
+	textView.SetText(singlePost.Post.ContentMarkdown)
+
+	textView.SetDoneFunc(func(key tcell.Key) {
+		if key == tcell.KeyEscape {
+			if err := app.SetRoot(list, true).SetFocus(list).Run(); err != nil {
+				app.Stop()
+				panic(err)
+			}
+		}
+	})
+	textView.SetBorder(true)
+	if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
+		app.Stop()
+		panic(err)
+	}
 }
 
 func getNews() {
