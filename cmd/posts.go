@@ -8,7 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/alexeyco/simpletable"
+	"github.com/manifoldco/promptui"
+	"github.com/rivo/tview"
 	"github.com/spf13/cobra"
 )
 
@@ -61,24 +62,26 @@ func getHotPosts() {
 	if err != nil {
 		log.Println(err)
 	}
-	table := simpletable.New()
-	table.Header = &simpletable.Header{
-		Cells: []*simpletable.Cell{
-			{Align: simpletable.AlignCenter, Text: "#"},
-			{Align: simpletable.AlignCenter, Text: "Title"},
-			{Align: simpletable.AlignCenter, Text: "Link"},
-		},
+	var posttitles []string
+	for _, post := range hotposts.Posts {
+		posttitles = append(posttitles, post.Title)
 	}
-	for ind, post := range hotposts.Posts {
-		r := []*simpletable.Cell{
-			{Align: simpletable.AlignRight, Text: fmt.Sprintf("%d", ind+1)},
-			{Align: simpletable.AlignRight, Text: post.Title},
-			{Align: simpletable.AlignRight, Text: post.Slug},
-		}
-		table.Body.Cells = append(table.Body.Cells, r)
+	prompt := promptui.Select{
+		Label: "Hot Posts",
+		Items: posttitles,
 	}
-	table.SetStyle(simpletable.StyleCompactLite)
-	fmt.Println(table.String())
+	_, result, err := prompt.Run()
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		return
+	}
+
+	fmt.Printf("You choose %q\n", result)
+	box := tview.NewBox().SetBorder(true).SetTitle("Hello, world!")
+	if err := tview.NewApplication().SetRoot(box, true).Run(); err != nil {
+		panic(err)
+	}
+
 }
 
 func getNews() {
