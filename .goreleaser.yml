@@ -13,7 +13,7 @@ builds:
   goarch:
     - amd64
 archive:
-  name_template: "hashnode-{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
+  name_template: "hashnode-{{ .Os }}-{{ .Arch }}"
   format: binary
 checksum:
   name_template: 'checksums.txt'
