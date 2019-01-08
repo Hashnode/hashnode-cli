@@ -3,12 +3,11 @@
 
 Wanted to get [hashnode](https://hashnode.com) on your terminal, Ahoy! now you can.
 
-Here is a quick sample,
+Here is a quick sample
 
 ```
 hashnode posts --hot
-```
-```
+
 (0) [Look Inside] There are two kinds of developers in the world. Which one are you?
     A fun question - Which one are you?
 (1) What do you do when you have no work at office?
