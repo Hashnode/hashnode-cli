@@ -28,7 +28,7 @@ release:
   github:
     owner: hashnode
     name: hashnode-cli
-  draft: true
+  draft: false
 brew:
   name: "hashnode"
   github:
