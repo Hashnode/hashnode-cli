@@ -21,7 +21,6 @@ const (
 // API URL's
 var (
 	hotPostsAPI = fmt.Sprintf("%s/posts/%s", rootAPIURL, "hot")
-	newsAPI     = fmt.Sprintf("%s/posts/%s", rootAPIURL, "news")
 	postAPI     = fmt.Sprintf("%s/post", rootAPIURL)
 )
 
