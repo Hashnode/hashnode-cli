@@ -38,10 +38,12 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 	author := fmt.Sprintf("Author: %s", singlePost.Post.Author.Name)
 	upvotes := fmt.Sprintf("Upvotes: %d", singlePost.Post.Upvotes)
 	ptype := fmt.Sprintf("Type: %s", singlePost.Post.Type)
+	link := fmt.Sprintf("Link: https://hashnode.com/post/%s", singlePost.Post.Cuid)
 	writeToTextView(textView, title,
 		author,
 		upvotes,
 		ptype,
+		link,
 		"\n",
 		singlePost.Post.ContentMarkdown,
 	)

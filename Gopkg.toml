@@ -26,10 +26,6 @@
 
 
 [[constraint]]
-  name = "github.com/manifoldco/promptui"
-  version = "0.3.2"
-
-[[constraint]]
   name = "github.com/mitchellh/go-homedir"
   version = "1.0.0"
 
