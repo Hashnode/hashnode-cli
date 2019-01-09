@@ -36,3 +36,8 @@ sudo mv ./hashnode /usr/local/bin/hashnode
 ### Windows:
 
 Download from [GitHub](https://github.com/Hashnode/hashnode-cli/releases) and add the binary to your PATH.
+
+### Go
+Installing using go get pulls from the master branch with the latest development changes.
+
+    go get -u github.com/hashnode/hashnode-cli
