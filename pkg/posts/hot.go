@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gdamore/tcell"
 	"github.com/rivo/tview"
 )
 
@@ -66,43 +65,6 @@ func GetHotPosts() {
 		panic(err)
 	}
 
-}
-
-func openPost(app *tview.Application, postcuid string, list *tview.List) {
-	var singlePost Post
-	b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, postcuid))
-	if err != nil {
-		app.Stop()
-		log.Fatal(err)
-	}
-
-	err = json.Unmarshal(b, &singlePost)
-	if err != nil {
-		app.Stop()
-		log.Fatal(err)
-	}
-
-	textView := tview.NewTextView().
-		SetDynamicColors(true).
-		SetRegions(true).
-		SetChangedFunc(func() {
-			app.Draw()
-		})
-	textView.SetText(singlePost.Post.ContentMarkdown)
-
-	textView.SetDoneFunc(func(key tcell.Key) {
-		if key == tcell.KeyEscape {
-			if err := app.SetRoot(list, true).SetFocus(list).Run(); err != nil {
-				app.Stop()
-				panic(err)
-			}
-		}
-	})
-	textView.SetBorder(true)
-	if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
-		app.Stop()
-		panic(err)
-	}
 }
 
 func makeRequest(url string) ([]byte, error) {

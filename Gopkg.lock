@@ -112,14 +112,6 @@
   revision = "36893a66979260e9758701ae306ec0d69c0f53c8"
 
 [[projects]]
-  digest = "1:9421f6e9e28ef86933e824b5caff441366f2b69bb281085b9dca40e1f27a1602"
-  name = "github.com/shurcooL/sanitized_anchor_name"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "7bfe4c7ecddb3666a94b053b422cdd8f5aaa3615"
-  version = "v1.0.0"
-
-[[projects]]
   digest = "1:d707dbc1330c0ed177d4642d6ae102d5e2c847ebd0eb84562d0dc4f024531cfc"
   name = "github.com/spf13/afero"
   packages = [
@@ -172,46 +164,6 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:5d2cbd796d9f18072447474c777143b0507927b7bb986512fc4e367c4cf72873"
-  name = "gitlab.com/golang-commonmark/html"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "cfaf75183c4a5f0e44e3d51ece1065accafdd2b3"
-
-[[projects]]
-  branch = "master"
-  digest = "1:b2df46c18988f929c3e409a31bbb9c71b0478abcc4cffe9c7a3bf337cd69fce0"
-  name = "gitlab.com/golang-commonmark/linkify"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "c22b7bdb117955ff2cc0e3724083d35e3419d71e"
-
-[[projects]]
-  branch = "master"
-  digest = "1:4a82d7e805a3376def8c3bca81b6086825cf7f77b9ec995109b2054dbe125c3e"
-  name = "gitlab.com/golang-commonmark/markdown"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "772775880e1fbf39a7804149ed11c0f714ec89fe"
-
-[[projects]]
-  branch = "master"
-  digest = "1:0f5444377e1a705077df602f28b8571a85753883ddcd6580f28cc285835e4e51"
-  name = "gitlab.com/golang-commonmark/mdurl"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "e5bce34c34f29ecf232fec34f3982e55533ec14e"
-
-[[projects]]
-  branch = "master"
-  digest = "1:6b1431a6153c85e1e646b89af7c3a729b44c2572f78ea157c3b7d7a7adc31835"
-  name = "gitlab.com/golang-commonmark/puny"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "2cd490539afe7c6fc0eda6c59ef88fa93a00ea0d"
-
-[[projects]]
-  branch = "master"
   digest = "1:ab01052262e2ef935fdec4632b4029e56e7efbc96a569feebdcdc67fd84a9b5b"
   name = "golang.org/x/sys"
   packages = ["unix"]
@@ -219,35 +171,21 @@
   revision = "cb59ee3660675d463e86971646692ea3e470021c"
 
 [[projects]]
-  digest = "1:3dbccc894352c3a1a943e8906bd354ee4f020e64d7ba8bdc66ab248709a7f226"
+  digest = "1:69c6af69fd1551d253ed0520e4c9f312908b348a79a95ad5ae39883898f628b1"
   name = "golang.org/x/text"
   packages = [
-    "collate",
-    "collate/build",
     "encoding",
     "encoding/internal/identifier",
-    "internal/colltab",
     "internal/gen",
-    "internal/tag",
     "internal/triegen",
     "internal/ucd",
-    "language",
     "transform",
     "unicode/cldr",
     "unicode/norm",
-    "unicode/rangetable",
   ]
   pruneopts = "UT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
-
-[[projects]]
-  digest = "1:2ee0f15eb0fb04f918db7c2dcf39745f40d69f798ef171610a730e8a56aaa4fd"
-  name = "gopkg.in/russross/blackfriday.v2"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "d3b5b032dc8e8927d31a5071b56e14c89f045135"
-  version = "v2.0.1"
 
 [[projects]]
   digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
@@ -266,8 +204,6 @@
     "github.com/rivo/tview",
     "github.com/spf13/cobra",
     "github.com/spf13/viper",
-    "gitlab.com/golang-commonmark/markdown",
-    "gopkg.in/russross/blackfriday.v2",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
