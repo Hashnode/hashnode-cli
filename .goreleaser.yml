@@ -30,3 +30,22 @@ release:
     owner: hashnode
     name: hashnode-cli
   draft: true
+brew:
+  name: "hashnode"
+  github:
+    owner: hashnode
+    name: homebrew-tap
+  download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+  
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@hashnode.com
+
+  folder: Formula
+
+  homepage: "https://hashnode.com"
+  description: "Get hashnode.com on your terminal"
+
+  skip_upload: false
+
+
