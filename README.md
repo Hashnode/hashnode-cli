@@ -6,7 +6,7 @@ Wanted to get [hashnode](https://hashnode.com) on your terminal, Ahoy! now you c
 Here is a quick sample
 
 ```
-hashnode posts --hot
+hashnode posts --trending
 
 (0) [Look Inside] There are two kinds of developers in the world. Which one are you?
     A fun question - Which one are you?
