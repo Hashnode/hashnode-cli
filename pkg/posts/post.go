@@ -35,7 +35,13 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		})
 
 	title := fmt.Sprintf("Title: %s", singlePost.Post.Title)
-	author := fmt.Sprintf("Author: %s", singlePost.Post.Author.Name)
+	var author string
+	if singlePost.Post.Author.Name != "" {
+		author = fmt.Sprintf("Author: %s", singlePost.Post.Author.Name)
+	} else {
+		author = fmt.Sprintf("Author: Anonymous")
+	}
+
 	reactions := fmt.Sprintf("Reactions: %d", singlePost.Post.TotalReactions)
 	ptype := fmt.Sprintf("Type: %s", singlePost.Post.Type)
 	link := fmt.Sprintf("Link: https://hashnode.com/post/%s", singlePost.Post.Cuid)
