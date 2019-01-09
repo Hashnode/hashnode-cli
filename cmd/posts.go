@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/hashnode/hashnode-cli/pkg/posts"
 	"github.com/spf13/cobra"
 )
@@ -27,7 +25,7 @@ var postsCmd = &cobra.Command{
 		case trending:
 			posts.GetTrendingPosts()
 		default:
-			log.Println("Specify what posts to get")
+			cmd.Help()
 		}
 	},
 }
