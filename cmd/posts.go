@@ -9,8 +9,9 @@ import (
 
 // flags
 var (
-	hot  bool
-	news bool
+	hot      bool
+	news     bool
+	trending bool
 )
 
 // postsCmd represents the posts command
@@ -23,6 +24,8 @@ var postsCmd = &cobra.Command{
 			posts.GetNews()
 		case hot:
 			posts.GetHotPosts()
+		case trending:
+			posts.GetTrendingPosts()
 		default:
 			log.Println("Specify what posts to get")
 		}
@@ -34,4 +37,5 @@ func init() {
 
 	postsCmd.PersistentFlags().BoolVar(&hot, "hot", false, "get hot posts")
 	postsCmd.PersistentFlags().BoolVar(&news, "news", false, "get news")
+	postsCmd.PersistentFlags().BoolVar(&trending, "trending", false, "get trending stories")
 }
