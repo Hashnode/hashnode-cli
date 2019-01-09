@@ -36,17 +36,46 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 
 	title := fmt.Sprintf("Title: %s", singlePost.Post.Title)
 	author := fmt.Sprintf("Author: %s", singlePost.Post.Author.Name)
-	upvotes := fmt.Sprintf("Upvotes: %d", singlePost.Post.Upvotes)
+	reactions := fmt.Sprintf("Reactions: %d", singlePost.Post.TotalReactions)
 	ptype := fmt.Sprintf("Type: %s", singlePost.Post.Type)
 	link := fmt.Sprintf("Link: https://hashnode.com/post/%s", singlePost.Post.Cuid)
-	writeToTextView(textView, title,
+	writeToTextView(textView,
+		title,
 		author,
-		upvotes,
+		reactions,
 		ptype,
 		link,
 		"\n",
 		singlePost.Post.ContentMarkdown,
+		"\n[green]Responses[white]",
+		"[green]==========[white]",
 	)
+	for ind, response := range singlePost.Post.Responses {
+		writeToTextView(
+			textView,
+			fmt.Sprintf("\n%d", ind+1),
+			fmt.Sprintf("---"),
+			response.ContentMarkdown,
+		)
+		if len(response.Replies) > 0 {
+			writeToTextView(textView,
+				"\n\t[green]Replies[white]",
+				"\t[green]=======[white]",
+			)
+			for indreply, reply := range response.Replies {
+				writeToTextView(
+					textView,
+					fmt.Sprintf("\n\t%d", indreply+1),
+					fmt.Sprintf("\t---"),
+					fmt.Sprintf("\tAuthor: %s", reply.Author.Name),
+					fmt.Sprintf("\t%s", reply.ContentMarkdown),
+				)
+
+			}
+		}
+
+	}
+
 	textView.Box = textView.Box.SetBorder(true).SetBorderPadding(1, 1, 2, 1)
 	textView.SetBorder(true)
 
