@@ -14,7 +14,6 @@ builds:
     - amd64
 archive:
   name_template: "hashnode-{{ .Os }}-{{ .Arch }}"
-  format: binary
 checksum:
   name_template: 'checksums.txt'
 snapshot:
