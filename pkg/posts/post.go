@@ -45,6 +45,8 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		"\n",
 		singlePost.Post.ContentMarkdown,
 	)
+	textView.Box = textView.Box.SetBorder(true).SetBorderPadding(1, 1, 2, 1)
+	textView.SetBorder(true)
 
 	textView.SetDoneFunc(func(key tcell.Key) {
 		if key == tcell.KeyEscape {
@@ -54,7 +56,7 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 			}
 		}
 	})
-	textView.SetBorder(true)
+
 	if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
 		app.Stop()
 		panic(err)
