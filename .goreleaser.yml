@@ -44,7 +44,3 @@ brew:
 
   homepage: "https://hashnode.com"
   description: "Get hashnode.com on your terminal"
-
-  skip_upload: false
-
-
