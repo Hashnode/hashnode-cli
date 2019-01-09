@@ -35,7 +35,7 @@ brew:
     owner: hashnode
     name: homebrew-tap
   download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
-  custom_require: custom_download_strategy 
+  custom_require: require_relative
   
   commit_author:
     name: goreleaserbot
