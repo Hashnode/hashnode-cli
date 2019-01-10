@@ -7,6 +7,8 @@ import (
 
 	"github.com/gdamore/tcell"
 	"github.com/rivo/tview"
+	blackfriday "github.com/russross/blackfriday"
+	"github.com/scriptonist/termd/pkg/console"
 )
 
 // openPost opens a post in a new tview box
@@ -52,16 +54,21 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		ptype,
 		link,
 		"\n",
-		singlePost.Post.ContentMarkdown,
-		"\n[green]Responses[white]",
-		"[green]==========[white]",
+		renderTerminal(singlePost.Post.ContentMarkdown),
+		func() string {
+			if len(singlePost.Post.Responses) > 0 {
+				return fmt.Sprintf("\n%s\n%s\n", "[green]Responses[white]",
+					"[green]==========[white]")
+			}
+			return ""
+		}(),
 	)
 	for ind, response := range singlePost.Post.Responses {
 		writeToTextView(
 			textView,
 			fmt.Sprintf("\n%d", ind+1),
 			fmt.Sprintf("---"),
-			response.ContentMarkdown,
+			renderTerminal(response.ContentMarkdown),
 		)
 		if len(response.Replies) > 0 {
 			writeToTextView(textView,
@@ -74,7 +81,7 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 					fmt.Sprintf("\n\t%d", indreply+1),
 					fmt.Sprintf("\t---"),
 					fmt.Sprintf("\tAuthor: %s", reply.Author.Name),
-					fmt.Sprintf("\t%s", reply.ContentMarkdown),
+					fmt.Sprintf("\t%s", renderTerminal(reply.ContentMarkdown)),
 				)
 
 			}
@@ -105,4 +112,13 @@ func writeToTextView(t *tview.TextView, contents ...string) {
 		t.Write([]byte(content))
 		t.Write([]byte("\n"))
 	}
+}
+
+func renderTerminal(content string) string {
+	r := console.Console{}
+	out := string(blackfriday.Run([]byte(content),
+		blackfriday.WithRenderer(r),
+		blackfriday.WithExtensions(blackfriday.CommonExtensions)))
+	return out
+
 }

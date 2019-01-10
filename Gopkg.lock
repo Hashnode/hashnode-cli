@@ -112,6 +112,30 @@
   revision = "36893a66979260e9758701ae306ec0d69c0f53c8"
 
 [[projects]]
+  digest = "1:2ee0f15eb0fb04f918db7c2dcf39745f40d69f798ef171610a730e8a56aaa4fd"
+  name = "github.com/russross/blackfriday"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "d3b5b032dc8e8927d31a5071b56e14c89f045135"
+  version = "v2.0.1"
+
+[[projects]]
+  digest = "1:f6f503d4316d9145576171a19817582fa02245995138c22abcf0b262ab0b01be"
+  name = "github.com/scriptonist/termd"
+  packages = ["pkg/console"]
+  pruneopts = "UT"
+  revision = "63f2556634accbe02e56c023346939f30607c2dd"
+  version = "v0.0.4"
+
+[[projects]]
+  digest = "1:9421f6e9e28ef86933e824b5caff441366f2b69bb281085b9dca40e1f27a1602"
+  name = "github.com/shurcooL/sanitized_anchor_name"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "7bfe4c7ecddb3666a94b053b422cdd8f5aaa3615"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:d707dbc1330c0ed177d4642d6ae102d5e2c847ebd0eb84562d0dc4f024531cfc"
   name = "github.com/spf13/afero"
   packages = [
@@ -164,11 +188,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ab01052262e2ef935fdec4632b4029e56e7efbc96a569feebdcdc67fd84a9b5b"
+  digest = "1:91137b48dc3eb34409f731b49f63a5ebf73218168a065e1a93af24eb5b2f99e8"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "cb59ee3660675d463e86971646692ea3e470021c"
+  revision = "48ac38b7c8cbedd50b1613c0fccacfc7d88dfcdf"
 
 [[projects]]
   digest = "1:69c6af69fd1551d253ed0520e4c9f312908b348a79a95ad5ae39883898f628b1"
@@ -202,6 +226,8 @@
     "github.com/gdamore/tcell",
     "github.com/mitchellh/go-homedir",
     "github.com/rivo/tview",
+    "github.com/russross/blackfriday",
+    "github.com/scriptonist/termd/pkg/console",
     "github.com/spf13/cobra",
     "github.com/spf13/viper",
   ]
