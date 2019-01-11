@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/briandowns/spinner"
 	"github.com/rivo/tview"
 )
 
@@ -24,11 +25,16 @@ var (
 )
 
 func GetHotPosts() {
+
+	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond) // Build our new spinner
+	s.Start()
 	b, err := makeRequest(hotPostsAPI)
 	if err != nil {
 		log.Printf("Oops, some network error: %v\n", err)
 		os.Exit(0)
 	}
+	s.Stop()
+
 	var hotposts HotPosts
 	err = json.Unmarshal(b, &hotposts)
 	if err != nil {
@@ -68,6 +74,7 @@ func GetHotPosts() {
 }
 
 func makeRequest(url string) ([]byte, error) {
+
 	client := http.Client{
 		Timeout: time.Duration(1 * time.Minute),
 	}

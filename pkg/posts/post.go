@@ -13,18 +13,6 @@ import (
 
 // openPost opens a post in a new tview box
 func openPost(app *tview.Application, postcuid string, list *tview.List) {
-	var singlePost Post
-	b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, postcuid))
-	if err != nil {
-		app.Stop()
-		log.Fatal(err)
-	}
-
-	err = json.Unmarshal(b, &singlePost)
-	if err != nil {
-		app.Stop()
-		log.Fatal(err)
-	}
 
 	textView := tview.NewTextView().
 		SetDynamicColors(true).
@@ -36,7 +24,33 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 			app.Draw()
 		})
 
-	title := fmt.Sprintf("Title: %s", singlePost.Post.Title)
+	textView.Box = textView.Box.SetBorder(true).SetBorderPadding(1, 1, 2, 1)
+	textView.SetBorder(true)
+
+	go func() {
+		if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
+			app.Stop()
+			panic(err)
+		}
+	}()
+
+	var singlePost Post
+	textView.SetText("[green::l]Loading...")
+	b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, postcuid))
+	if err != nil {
+		app.Stop()
+		log.Fatal(err)
+	}
+	textView.SetText("")
+	textView.ScrollToBeginning()
+
+	err = json.Unmarshal(b, &singlePost)
+	if err != nil {
+		app.Stop()
+		log.Fatal(err)
+	}
+
+	title := fmt.Sprintf("\nTitle: %s", singlePost.Post.Title)
 	var author string
 	if singlePost.Post.Author.Name != "" {
 		author = fmt.Sprintf("Author: %s", singlePost.Post.Author.Name)
@@ -89,9 +103,6 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 
 	}
 
-	textView.Box = textView.Box.SetBorder(true).SetBorderPadding(1, 1, 2, 1)
-	textView.SetBorder(true)
-
 	textView.SetDoneFunc(func(key tcell.Key) {
 		if key == tcell.KeyEscape {
 			if err := app.SetRoot(list, true).SetFocus(list).Run(); err != nil {
@@ -101,10 +112,6 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		}
 	})
 
-	if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
-		app.Stop()
-		panic(err)
-	}
 }
 
 func writeToTextView(t *tview.TextView, contents ...string) {

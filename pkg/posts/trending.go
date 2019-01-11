@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/briandowns/spinner"
 	"github.com/rivo/tview"
 )
 
@@ -16,11 +17,16 @@ var (
 )
 
 func GetTrendingPosts() {
+
+	s := spinner.New(spinner.CharSets[9], 100*time.Millisecond) // Build our new spinner
+	s.Start()
 	b, err := makeRequest(trendingStoriesAPI)
 	if err != nil {
 		log.Printf("Oops, some network error: %v\n", err)
 		os.Exit(0)
 	}
+	s.Stop()
+
 	var posts TrendingStories
 	err = json.Unmarshal(b, &posts)
 	if err != nil {
