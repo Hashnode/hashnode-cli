@@ -35,14 +35,13 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 	}()
 
 	var singlePost Post
-	textView.SetText("[green::l]Loading...")
+	textView.Write([]byte("[:green:l]Loading....[-:-:-]"))
 	b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, postcuid))
 	if err != nil {
 		app.Stop()
 		log.Fatal(err)
 	}
-	textView.SetText("")
-	textView.ScrollToBeginning()
+	textView.Clear()
 
 	err = json.Unmarshal(b, &singlePost)
 	if err != nil {
@@ -102,6 +101,7 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		}
 
 	}
+	textView.ScrollToBeginning()
 
 	textView.SetDoneFunc(func(key tcell.Key) {
 		if key == tcell.KeyEscape {
