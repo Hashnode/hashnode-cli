@@ -33,11 +33,11 @@ sudo mv ./hashnode /usr/local/bin/hashnode
 #### MacOS
 `brew install hashnode/tap/hashnode`
     
-### Windows:
+#### Windows:
 
 Download from [GitHub](https://github.com/Hashnode/hashnode-cli/releases) and add the binary to your PATH.
 
-### Go
+#### Go
 Installing using go get pulls from the master branch with the latest development changes.
 
     go get -u github.com/hashnode/hashnode-cli
