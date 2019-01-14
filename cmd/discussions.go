@@ -12,7 +12,7 @@ var (
 
 // postsCmd represents the posts command
 var postsCmd = &cobra.Command{
-	Use:     "dicussions",
+	Use:     "discussions",
 	Short:   "Read discussions on hashnode",
 	Aliases: []string{"d"},
 	Run: func(cmd *cobra.Command, args []string) {
