@@ -6,6 +6,7 @@ Wanted to get [hashnode](https://hashnode.com) on your terminal? Ahoy! now you c
 Here is a quick sample
 
 ```
+hashnode --help
 hashnode stories --hot
 hashnode discussions --hot
 
