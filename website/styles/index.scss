@@ -53,7 +53,7 @@ a{
         display: flex;
         flex-wrap: wrap;
 
-        .left, .right{
+        .left{
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -62,10 +62,13 @@ a{
 
         .left{
             width: 45%;
-            min-height: 100vh;
+            height: 100vh;
             background-color: #1C74FE;
             position: relative;
             overflow: hidden;
+            position: fixed;
+            left: 0;
+            top: 0;
 
             img{
                 position: absolute;
@@ -86,10 +89,18 @@ a{
         }
 
         .right{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 55%;
-            min-height: 100vh;
-            position: relative;
+            position: fixed;
             z-index: 999;
+            right: 0;
+            top: 0;
+            min-height: 600px;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
 
             .content-wrap{
                 padding: 50px;
@@ -261,16 +272,33 @@ a{
     
 }
 
+pre, code{
+    width: 600px;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    overflow: auto;
+    padding: 5px;
+    line-height: 28px;
+}
+pre{
+    overflow: auto;
+}
 
-@media screen and (max-width: 1040px){
+a{
+    color: #1C74FE;
+}
+
+@media screen and (max-width: 1258px){
 
     .left{
         width: 20px!important;
+        display: none;
         img{
             display: none;
         }
     }
     .right{
+        width: 100%!important;
         flex-grow: 1;
     }
 
