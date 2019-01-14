@@ -34,10 +34,11 @@ func GetNews() {
 	}
 
 	list := tview.NewList()
+	list.Box.SetBorder(true)
+
 	app := tview.NewApplication()
 
 	for ind, post := range posts.Posts {
-
 		list = list.AddItem(post.Title, post.Brief, rune(strconv.Itoa(ind)[0]), nil)
 	}
 
@@ -53,7 +54,7 @@ func GetNews() {
 				app.Stop()
 				panic(err)
 			}
-
+			list.Box.Blur()
 			openPost(app, posts.Posts[n].Cuid, list)
 
 		}

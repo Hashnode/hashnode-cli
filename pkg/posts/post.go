@@ -28,20 +28,22 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 	textView.SetBorder(true)
 
 	go func() {
-		if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
+	}()
+
+	modal := tview.NewModal().SetText("Loading....")
+	go func() {
+		if err := app.SetRoot(modal, false).SetFocus(modal).Run(); err != nil {
 			app.Stop()
 			panic(err)
 		}
 	}()
 
 	var singlePost Post
-	textView.Write([]byte("[:green:l]Loading....[-:-:-]"))
 	b, err := makeRequest(fmt.Sprintf("%s/%s", postAPI, postcuid))
 	if err != nil {
 		app.Stop()
 		log.Fatal(err)
 	}
-	textView.Clear()
 
 	err = json.Unmarshal(b, &singlePost)
 	if err != nil {
@@ -101,7 +103,6 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		}
 
 	}
-	textView.ScrollToBeginning()
 
 	textView.SetDoneFunc(func(key tcell.Key) {
 		if key == tcell.KeyEscape {
@@ -111,6 +112,11 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 			}
 		}
 	})
+
+	if err := app.SetRoot(textView, true).SetFocus(textView).Run(); err != nil {
+		app.Stop()
+		panic(err)
+	}
 
 }
 
