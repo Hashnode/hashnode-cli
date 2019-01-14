@@ -27,7 +27,6 @@ hashnode posts --trending
 
 ```
 tar xvf hashnode.tar.gz
-cd hashnode
 chmod +x hashnode
 sudo mv ./hashnode /usr/local/bin/hashnode
 ```
