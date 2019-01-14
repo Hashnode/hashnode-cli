@@ -6,18 +6,18 @@ Wanted to get [hashnode](https://hashnode.com) on your terminal, Ahoy! now you c
 Here is a quick sample
 
 ```
-hashnode posts --trending
+hashnode stories --hot
 
-(0) [Look Inside] There are two kinds of developers in the world. Which one are you?
-    A fun question - Which one are you?
-(1) What do you do when you have no work at office?
-    There's always a phase where we have no work assigned to us at the office. How do you best utilise the time?
-(2) What should 'good communication skills' mean for a developer?
-    We often hear that apart from technical skills companies also look for 'good communication skills' in a software developer. In your opinion, what are the attributes of someone h
-(3) What are some good podcasts for developers?
-    I personally listen to the followingCommand Line Heroes (by RedHat)Software Engineering DailyIRL (by Mozilla)Hanselminutes (by Scott Hanselman)Masters of scale with Reid Hoffman
-(4) Need advice: How do you write tests?
-    We've our Rest API server built on NodeJS and we've started to implement "test".Our app consists of a lot of DB calls (mostly using ORM), API calls to FB and other 3rd party ser
+(0) Download Monitoring: A Cross-Browser Story
+    PreambleWhen you want to implement something in a cross-browser way, you are in for a ride down the bugtracker hole. After some ex
+(1) How IDE is a blessing for beginners
+    Quite recently I came across the post  IDE - The beginner's trap. It's a must a read, good article by YounesButI can't agree to it
+(2) HTTP request with ES6 tagged templates
+    ES6 template literals are one of my favorite features in es6. A few days ago I saw an open source project on github - htm, there a
+(3) Benefits of Progressive Web Applications (PWAs) and How to Build One
+    In this tutorial, we're going to build up the fundamentals on Progressive Web Applications (PWAs). I'll help you understand the pa
+(4) The all-new Hashnode Chrome extension
+    With the start of the new year, new team members, new features, and new product(s), we here at Hashnode are working hard to bring
 (q) Quit
     Press to exit
 ```
@@ -41,3 +41,5 @@ Download from [GitHub](https://github.com/Hashnode/hashnode-cli/releases) and ad
 Installing using go get pulls from the master branch with the latest development changes.
 
     go get -u github.com/hashnode/hashnode-cli
+# Demo
+[![asciicast](https://asciinema.org/a/221329.svg)](https://asciinema.org/a/221329)
