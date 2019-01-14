@@ -26,7 +26,8 @@ var storiesCmd = &cobra.Command{
 }
 
 func init() {
+	cobra.EnableCommandSorting = false
+	
 	rootCmd.AddCommand(storiesCmd)
-
 	storiesCmd.PersistentFlags().BoolVar(&trending, "hot", false, "get hot trending stories")
 }
