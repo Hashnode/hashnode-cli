@@ -231,7 +231,7 @@ a {
 }
 
 pre, code {
-  width: 600px;
+  max-width: 600px;
   background-color: #f6f8fa;
   border-radius: 3px;
   overflow: auto;
@@ -248,6 +248,15 @@ a {
 }
 
 @media screen and (max-width: 1258px) {
+  .right {
+    position: relative !important;
+  }
+
+  code, pre {
+    max-width: 450px;
+    width: 100% !important;
+  }
+
   .left {
     width: 20px !important;
     display: none;
@@ -257,12 +266,18 @@ a {
   }
 
   .right {
-    width: 100% !important;
-    flex-grow: 1;
+    padding: 0 10px;
+    display: block !important;
+    flex-grow: 1 !important;
+    overflow-y: auto !important;
   }
 
   .play-button {
     display: none;
+  }
+
+  footer {
+    padding-left: 50px;
   }
 }
 footer {
