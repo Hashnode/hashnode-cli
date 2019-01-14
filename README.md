@@ -1,7 +1,7 @@
 
 # Hashnode CLI
 
-Wanted to get [hashnode](https://hashnode.com) on your terminal, Ahoy! now you can.
+Wanted to get [Hashnode](https://hashnode.com) on your terminal, Ahoy! now you can.
 
 Here is a quick sample
 
