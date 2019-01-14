@@ -1,12 +1,13 @@
 
 # Hashnode CLI
 
-Wanted to get [hashnode](https://hashnode.com) on your terminal, Ahoy! now you can.
+Wanted to get [hashnode](https://hashnode.com) on your terminal? Ahoy! now you can.
 
 Here is a quick sample
 
 ```
 hashnode stories --hot
+hashnode discussions --hot
 
 (0) Download Monitoring: A Cross-Browser Story
     PreambleWhen you want to implement something in a cross-browser way, you are in for a ride down the bugtracker hole. After some ex
