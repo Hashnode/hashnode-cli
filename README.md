@@ -23,7 +23,7 @@ hashnode posts --trending
 ```
 ## Installation
 #### Linux
-    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.5/hashnode-linux-amd64.tar.gz -o hashnode.tar.gz
+    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.6/hashnode-linux-amd64.tar.gz -o hashnode.tar.gz
 
 ```
 tar xvf hashnode.tar.gz
