@@ -23,15 +23,16 @@ hashnode posts --trending
 ```
 ## Installation
 #### Linux
-    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.1/hashnode-linux-amd64 -o hashnode
-
-#### macOS
-    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.1/hashnode-darwin-amd64 -o hashnode
+    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.5/hashnode-linux-amd64.tar.gz -o hashnode.tar.gz
 
 ```
+tar xvf hashnode.tar.gz
+cd hashnode
 chmod +x hashnode
 sudo mv ./hashnode /usr/local/bin/hashnode
 ```
+#### MacOS
+`brew install hashnode/tap/hashnode`
     
 ### Windows:
 
