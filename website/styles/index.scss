@@ -64,15 +64,32 @@ a{
             width: 45%;
             min-height: 100vh;
             background-color: #1C74FE;
+            position: relative;
+            overflow: hidden;
+
             img{
-                width: 400px;
+                position: absolute;
+                height: 80vh;
+                max-height: 746px;
+                left: 20%;
             }
+
+            .play-button{
+                position: absolute;
+                left: 25%;
+                right: 0;
+                top: 45%;
+                margin: 0 auto;
+                width: 100px;
+            }
+            
         }
 
         .right{
             width: 55%;
             min-height: 100vh;
             position: relative;
+            z-index: 999;
 
             .content-wrap{
                 padding: 50px;
@@ -173,6 +190,77 @@ a{
     
 }
 
+.container{
+
+    .container-wrap{
+        transition: .11s all linear;
+    }
+
+    &.active .container-wrap{
+        transition: .11s all linear;    
+        transform: scale(.9)
+    }
+    
+}
+
+#demo{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255,255,255, .7);
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 999999;
+    pointer-events: none;
+    transition: .11s all linear;
+    
+    .demo-wrap{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+
+        .close-button{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+
+            img{
+                width: 30px;
+            }
+            
+        }
+        
+        & > div{
+            width: 1020px;
+            height: 720px;
+            transform: scale(0.9);
+            margin: 0!important;
+            transition: .11s all linear;
+        }
+
+    }
+
+    &.active{
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+        pointer-events: inherit;
+        
+        .demo-wrap > div{
+            // transition-delay: .11s;
+            transition: .11s all linear;    
+            transform: scale(1);
+        }
+        
+    }
+    
+}
+
 
 @media screen and (max-width: 1040px){
 
@@ -184,6 +272,10 @@ a{
     }
     .right{
         flex-grow: 1;
+    }
+
+    .play-button{
+        display: none;
     }
     
 }

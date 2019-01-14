@@ -58,14 +58,28 @@ a {
   width: 45%;
   min-height: 100vh;
   background-color: #1C74FE;
+  position: relative;
+  overflow: hidden;
 }
 .container .container-wrap .left img {
-  width: 400px;
+  position: absolute;
+  height: 80vh;
+  max-height: 746px;
+  left: 20%;
+}
+.container .container-wrap .left .play-button {
+  position: absolute;
+  left: 25%;
+  right: 0;
+  top: 45%;
+  margin: 0 auto;
+  width: 100px;
 }
 .container .container-wrap .right {
   width: 55%;
   min-height: 100vh;
   position: relative;
+  z-index: 999;
 }
 .container .container-wrap .right .content-wrap {
   padding: 50px;
@@ -150,6 +164,61 @@ a {
   font-size: 16px;
 }
 
+.container .container-wrap {
+  transition: 0.11s all linear;
+}
+.container.active .container-wrap {
+  transition: 0.11s all linear;
+  transform: scale(0.9);
+}
+
+#demo {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 999999;
+  pointer-events: none;
+  transition: 0.11s all linear;
+}
+#demo .demo-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+#demo .demo-wrap .close-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+#demo .demo-wrap .close-button img {
+  width: 30px;
+}
+#demo .demo-wrap > div {
+  width: 1020px;
+  height: 720px;
+  transform: scale(0.9);
+  margin: 0 !important;
+  transition: 0.11s all linear;
+}
+#demo.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  pointer-events: inherit;
+}
+#demo.active .demo-wrap > div {
+  transition: 0.11s all linear;
+  transform: scale(1);
+}
+
 @media screen and (max-width: 1040px) {
   .left {
     width: 20px !important;
@@ -160,6 +229,10 @@ a {
 
   .right {
     flex-grow: 1;
+  }
+
+  .play-button {
+    display: none;
   }
 }
 footer {
