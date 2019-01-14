@@ -78,25 +78,27 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 			return ""
 		}(),
 	)
+	noresponse := len(singlePost.Post.Responses)
 	for ind, response := range singlePost.Post.Responses {
 		writeToTextView(
 			textView,
-			fmt.Sprintf("\n%d", ind+1),
-			fmt.Sprintf("---"),
+			fmt.Sprintf("\n[green]Response %d/%d[white]", ind+1, noresponse),
+			fmt.Sprintf("[green]--------------[green]"),
 			renderTerminal(response.ContentMarkdown),
 		)
 		if len(response.Replies) > 0 {
 			writeToTextView(textView,
-				"\n\t[green]Replies[white]",
-				"\t[green]=======[white]",
+				"\n[yellow]Replies[white]",
+				"[yellow]=======[white]",
 			)
+			noreplies := len(response.Replies)
 			for indreply, reply := range response.Replies {
 				writeToTextView(
 					textView,
-					fmt.Sprintf("\n\t%d", indreply+1),
-					fmt.Sprintf("\t---"),
-					fmt.Sprintf("\tAuthor: %s", reply.Author.Name),
-					fmt.Sprintf("\t%s", renderTerminal(reply.ContentMarkdown)),
+					fmt.Sprintf("\n[yellow]Reply %d/%d[white]", indreply+1, noreplies),
+					fmt.Sprintf("[yellow]~~~~~~~~~~~[white]"),
+					fmt.Sprintf("Author: %s", reply.Author.Name),
+					indentMarkdown(renderTerminal(reply.ContentMarkdown), "\t"),
 				)
 
 			}
@@ -134,4 +136,12 @@ func renderTerminal(content string) string {
 		blackfriday.WithExtensions(blackfriday.CommonExtensions)))
 	return out
 
+}
+
+func indentMarkdown(s string, prefix string) string {
+	// var lines []string
+	// for _, line := range strings.Split(s, "\n") {
+	// 	lines = append(lines, fmt.Sprintf("%s%s", prefix, line))
+	// }
+	return fmt.Sprintf("%s%s", prefix, s)
 }
