@@ -14,6 +14,11 @@ builds:
     - amd64
 archive:
   name_template: "hashnode-{{ .Os }}-{{ .Arch }}"
+  format_overrides:
+    - goos: windows
+      format: zip
+  files:
+    - none*
 checksum:
   name_template: 'checksums.txt'
 snapshot:
