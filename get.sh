@@ -1,6 +1,16 @@
 #!/bin/bash
 # set -x
 set -eo pipefail
+#!/bin/bash
+
+GREEN='\033[0;32m'
+NC='\033[0m'
+RED='\033[0;31m'
+
+if [[ $EUID -ne 0 ]]; then
+  echo -e "${RED}This script must be run as root, please try again with sudo${NC}" 
+   exit 1
+fi
 
 if ! [ -x "$(command -v tar)" ]; then
   echo 'Error: curl is not installed.' >&2
@@ -23,10 +33,8 @@ LATEST_VERSION=$(echo $LATEST_RELEASE | sed -e 's/.*"tag_name":"\([^"]*\)".*/\1/
 ARTIFACT_URL="https://github.com/hashnode/hashnode-cli/releases/download/$LATEST_VERSION/$ARTIFACT_NAME"
 
 curl -L $ARTIFACT_URL | tar xvz
-sudo mv hashnode /usr/local/bin/hashnode
+mv hashnode /usr/local/bin/hashnode
 
-GREEN='\033[0;32m'
-NC='\033[0m'
 
 echo -e "${GREEN}Installed Successfully${NC}"
 
