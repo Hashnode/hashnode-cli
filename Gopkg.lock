@@ -152,12 +152,12 @@
   version = "v2.0.1"
 
 [[projects]]
-  digest = "1:8776db183657c944a9ff1ace6d9d93121cbb8cb4b3cd978192bea301985a522c"
+  digest = "1:3b0718e3ee5c371fbc07997adab543b01f9efa9e8fc4ce3c789c76d62d149570"
   name = "github.com/scriptonist/termd"
   packages = ["pkg/console"]
   pruneopts = "UT"
-  revision = "9f49b7e79568508c44818dfeb8240fe8e3b861af"
-  version = "v0.0.8"
+  revision = "4ce77b5a0741a52ddfb972568de3b4fee99e32f5"
+  version = "v0.0.9"
 
 [[projects]]
   digest = "1:9421f6e9e28ef86933e824b5caff441366f2b69bb281085b9dca40e1f27a1602"
