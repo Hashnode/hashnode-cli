@@ -12,6 +12,9 @@ builds:
       - windows
   goarch:
     - amd64
+  ldflags:
+    - -X "github.com/hashnode/hashnode-cli/cmd.version={{ .Version  }}" -X  "github.com/hashnode/hashnode-cli/cmd.commithash={{ .FullCommit }}"
+
 archive:
   name_template: "hashnode-{{ .Os }}-{{ .Arch }}"
   format_overrides:
