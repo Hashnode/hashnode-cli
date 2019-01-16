@@ -2,6 +2,16 @@
 # set -x
 set -eo pipefail
 
+if ! [ -x "$(command -v curl)" ]; then
+  echo 'Error: curl is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v tar)" ]; then
+  echo 'Error: curl is not installed.' >&2
+  exit 1
+fi
+
 BINARY_NAME="hashnode"
 HOST_OS=${HOST_OS:-$(uname | tr '[:upper:]' '[:lower:]')}
 
