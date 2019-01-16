@@ -25,7 +25,7 @@ hashnode discussions --hot
 ```
 ## Installation
 #### Linux
-    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.7/hashnode-linux-amd64.tar.gz -o hashnode.tar.gz
+    curl -L https://github.com/Hashnode/hashnode-cli/releases/download/v0.1.8/hashnode-linux-amd64.tar.gz -o hashnode.tar.gz
 
 ```
 tar xvf hashnode.tar.gz
