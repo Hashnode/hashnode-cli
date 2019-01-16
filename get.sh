@@ -2,11 +2,6 @@
 # set -x
 set -eo pipefail
 
-if ! [ -x "$(command -v curl)" ]; then
-  echo 'Error: curl is not installed.' >&2
-  exit 1
-fi
-
 if ! [ -x "$(command -v tar)" ]; then
   echo 'Error: curl is not installed.' >&2
   exit 1
