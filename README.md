@@ -3,7 +3,7 @@
 
 Wanted to get [Hashnode](https://hashnode.com) on your terminal? Ahoy! now you can.
 
-Here is a quick sample
+Here are some commands to tryout
 
 ```
 hashnode stories --hot
