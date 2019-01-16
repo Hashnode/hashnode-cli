@@ -6,16 +6,16 @@ set -eo pipefail
 GREEN='\033[0;32m'
 NC='\033[0m'
 RED='\033[0;31m'
-
-if [[ $EUID -ne 0 ]]; then
-  echo -e "${RED}This script must be run as root, please try again with sudo${NC}" 
-   exit 1
-fi
+INSTALL_PATH="/usr/local/bin"
 
 if ! [ -x "$(command -v tar)" ]; then
   echo 'Error: curl is not installed.' >&2
   exit 1
 fi
+
+# Check for root permission
+touch ${INSTALL_PATH}/.hashnode &> /dev/null || (echo -e "${RED}Root access is required to install to ${GREEEN}${INSTALL_PATH}${NC}" && exit 1)
+rm ${INSTALL_PATH}/.hashnode
 
 BINARY_NAME="hashnode"
 HOST_OS=${HOST_OS:-$(uname | tr '[:upper:]' '[:lower:]')}
