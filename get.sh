@@ -1,7 +1,6 @@
 #!/bin/bash
 # set -x
 set -eo pipefail
-#!/bin/bash
 
 GREEN='\033[0;32m'
 NC='\033[0m'
