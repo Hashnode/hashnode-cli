@@ -75,9 +75,7 @@ func GetHotPosts() {
 
 func makeRequest(url string) ([]byte, error) {
 
-	client := http.Client{
-		Timeout: time.Duration(1 * time.Minute),
-	}
+	client := getHttpClient()
 	resp, err := client.Get(url)
 	if err != nil {
 		return nil, err
@@ -96,6 +94,12 @@ func makeRequest(url string) ([]byte, error) {
 
 	return nil, fmt.Errorf("Not Found")
 
+}
+func getHttpClient() *http.Client {
+
+	return &http.Client{
+		Timeout: time.Duration(1 * time.Minute),
+	}
 }
 
 // Types
