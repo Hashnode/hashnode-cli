@@ -51,7 +51,7 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 		log.Fatal(err)
 	}
 
-	title := fmt.Sprintf("\nTitle: %s", singlePost.Post.Title)
+	title := fmt.Sprintf("\nTitle: [::b]%s[-:-:-]", singlePost.Post.Title)
 	var author string
 	if singlePost.Post.Author.Name != "" {
 		author = fmt.Sprintf("Author: %s", singlePost.Post.Author.Name)
@@ -60,12 +60,14 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 	}
 
 	reactions := fmt.Sprintf("Reactions: %d", singlePost.Post.TotalReactions)
+	responses := fmt.Sprintf("Responses: %d", singlePost.Post.ResponseCount)
 	ptype := fmt.Sprintf("Type: %s", singlePost.Post.Type)
 	link := fmt.Sprintf("Link: https://hashnode.com/post/%s", singlePost.Post.Cuid)
 	writeToTextView(textView,
 		title,
 		author,
 		reactions,
+		responses,
 		ptype,
 		link,
 		"\n",
@@ -78,34 +80,7 @@ func openPost(app *tview.Application, postcuid string, list *tview.List) {
 			return ""
 		}(),
 	)
-	noresponse := len(singlePost.Post.Responses)
-	for ind, response := range singlePost.Post.Responses {
-		writeToTextView(
-			textView,
-			fmt.Sprintf("\n[green]Response %d/%d[white]", ind+1, noresponse),
-			fmt.Sprintf("[green]--------------[green]"),
-			renderTerminal(response.ContentMarkdown),
-		)
-		if len(response.Replies) > 0 {
-			writeToTextView(textView,
-				"\n[yellow]Replies[white]",
-				"[yellow]=======[white]",
-			)
-			noreplies := len(response.Replies)
-			for indreply, reply := range response.Replies {
-				writeToTextView(
-					textView,
-					fmt.Sprintf("\n[yellow]Reply %d/%d[white]", indreply+1, noreplies),
-					fmt.Sprintf("[yellow]~~~~~~~~~~~[white]"),
-					fmt.Sprintf("Author: %s", reply.Author.Name),
-					indentMarkdown(renderTerminal(reply.ContentMarkdown), "\t"),
-				)
-
-			}
-		}
-
-	}
-
+	openResponses(textView, singlePost.Post.ID, singlePost.Post.ResponseCount)
 	textView.SetDoneFunc(func(key tcell.Key) {
 		if key == tcell.KeyEscape {
 			if err := app.SetRoot(list, true).SetFocus(list).Run(); err != nil {
