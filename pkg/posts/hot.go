@@ -282,40 +282,7 @@ type Post struct {
 		IsDelisted             bool          `json:"isDelisted"`
 		AnsweredByTarget       bool          `json:"answeredByTarget"`
 		Contributors           []struct {
-			User struct {
-				ID                   string        `json:"_id"`
-				Username             string        `json:"username"`
-				Name                 string        `json:"name"`
-				Photo                string        `json:"photo"`
-				Tagline              string        `json:"tagline"`
-				Role                 interface{}   `json:"role"`
-				CoverImage           string        `json:"coverImage"`
-				NumReactions         int           `json:"numReactions"`
-				IsEvangelist         bool          `json:"isEvangelist"`
-				BadgesAwarded        []interface{} `json:"badgesAwarded"`
-				TotalUpvotesReceived int           `json:"totalUpvotesReceived"`
-				Appreciations        []struct {
-					Badge string `json:"badge"`
-					ID    string `json:"_id"`
-					Count int    `json:"count"`
-				} `json:"appreciations"`
-				DateJoined  time.Time `json:"dateJoined"`
-				SocialMedia struct {
-					Linkedin      string `json:"linkedin"`
-					Stackoverflow string `json:"stackoverflow"`
-					Google        string `json:"google"`
-					Facebook      string `json:"facebook"`
-					Twitter       string `json:"twitter"`
-					Github        string `json:"github"`
-					Website       string `json:"website"`
-				} `json:"socialMedia"`
-				StoriesCreated          []string `json:"storiesCreated"`
-				NumFollowing            int      `json:"numFollowing"`
-				NumFollowers            int      `json:"numFollowers"`
-				IsDeactivated           bool     `json:"isDeactivated"`
-				Location                string   `json:"location"`
-				TotalAppreciationBadges int      `json:"totalAppreciationBadges"`
-			} `json:"user"`
+			User  string `json:"user"`
 			Stamp string `json:"stamp"`
 			ID    string `json:"_id"`
 		} `json:"contributors"`
