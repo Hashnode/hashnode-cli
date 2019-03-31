@@ -13,7 +13,7 @@ if ! [ -x "$(command -v tar)" ]; then
 fi
 
 # Check for root permission
-touch ${INSTALL_PATH}/.hashnode &> /dev/null || (echo -e "${RED}Root access is required to install to ${GREEEN}${INSTALL_PATH}${NC}" && exit 1)
+touch ${INSTALL_PATH}/.hashnode &> /dev/null || (echo -e "${RED}Root access is required to install to ${GREEN}${INSTALL_PATH}${NC}" && exit 1)
 rm ${INSTALL_PATH}/.hashnode
 
 BINARY_NAME="hashnode"
